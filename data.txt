@@ -1,0 +1,373 @@
+CREATE TABLE `customer` (
+   `customer_id` SERIAL NOT NULL,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `email` VARCHAR(100),
+   `address` VARCHAR(255) NOT NULL,
+   `phone` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`customer_id`)
+);
+
+CREATE TABLE `mechanic` (
+   `mechanic_id` SERIAL NOT NULL,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `ssn` VARCHAR(11) NOT NULL,
+   `email` VARCHAR(100) NOT NULL,
+   `address ` VARCHAR(255) NOT NULL,
+   `phone ` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`mechanic_id`)
+);
+
+CREATE TABLE salesperson (
+   salesperson_id SERIAL NOT NULL,
+   first_name VARCHAR(50) NOT NULL,
+   last_name VARCHAR(50) NOT NULL,
+   ssn VARCHAR(11) NOT NULL,
+   email VARCHAR(100) NOT NULL,
+   address  VARCHAR(255) NOT NULL,
+   phone  VARCHAR(15) NOT NULL,
+   PRIMARY KEY (salesperson_id)
+);
+
+CREATE TABLE car (
+   car_id SERIAL NOT NULL,
+   model VARCHAR(50) NOT NULL,
+   color VARCHAR(50) NOT NULL,
+   year INT(4) NOT NULL,
+   sale_price DECIMAL(9,2) NOT NULL,
+   manufacture VARCHAR(20) NOT NULL,
+   car_for_sale BOOL NOT NULL,
+   PRIMARY KEY (`car_id`)
+);
+
+CREATE TABLE sevice (
+   service_id SERIAL NOT NULL,
+   name_of_service VARCHAR(255),
+   price DECIMAL(8,2) NOT NULL,
+   service_description VARCHAR(255),
+   PRIMARY KEY (service_id)
+);
+
+
+CREATE TABLE parts (
+   parts_id SERIAL NOT NULL,
+   part_number INT NOT NULL,
+   description VARCHAR(255),
+   purchased_price DECIMAL(8, 2) NOT NULL,
+   retail_price DECIMAL(8, 2) NOT NULL,
+   PRIMARY KEY (parts_id)
+);
+
+CREATE TABLE invoice (
+	invoice_id SERIAL NOT NULL,
+	invoice_number INT NOT NULL,
+	date DATE NOT NULL,
+	time TIME WITHOUT TIME ZONE NOT NULL,
+	car_id SERIAL,
+	salesperson_id SERIAL,
+	customer_id SERIAL,
+	PRIMARY KEY (invoice_id)
+);
+
+
+ALTER TABLE invoice ADD CONSTRAINT FK_0fcf53a5-9e49-4657-8544-86a8a18e1ce9 FOREIGN KEY (car_id) REFERENCES car(car_id);
+				   
+ALTER TABLE invoice ADD CONSTRAINT FK_bea7b236-1ce3-4344-a067-c863241369f5 FOREIGN KEY (salesperson_id) REFERENCES salesperson(salesperson_id);
+				   
+ALTER TABLE invoice ADD CONSTRAINT FK_134b8670-fd51-40cd-8a8d-4c3185424ecf FOREIGN KEY (customer_id) REFERENCES customer(customer_id);
+
+CREATE TABLE service_ticket (
+    service_ticket_id SERIAL NOT NULL,
+    car_id SERIAL NOT NULL,
+    customer_id SERIAL NOT NULL,
+    date_received DATE NOT NULL,
+    date_returned DATE NOT NULL,
+    comments VARCHAR(255),
+   PRIMARY KEY (service_ticket_id)
+);
+
+ALTER TABLE service_ticket ADD CONSTRAINT FK_91f188fa0863 FOREIGN KEY (car_id) REFERENCES car(car_id);
+
+ALTER TABLE service_ticket ADD CONSTRAINT FK_3fe728a036bc FOREIGN KEY (customer_id) REFERENCES customer(customer_id);
+
+
+
+CREATE TABLE `mechanics_services` (
+   `mechanics_services_id` SERIAL NOT NULL,
+   `service_ticket_id` SERIAL NOT NULL,
+   `service_id` SERIAL NOT NULL,
+   `mechanic_id` SERIAL NOT NULL,
+   `total_hours` INT,
+   `rate` DECIMAL(5,2),
+   `work_cost` DECIMAL(6,2),
+   `total_work_cost` DECIMAL(7,2),
+   `comments` VARCHAR(255),
+   PRIMARY KEY (`mechanics_services_id`)
+);
+
+CREATE TABLE `customer` (
+   `customer_id` SERIAL NOT NULL,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `email` VARCHAR(100),
+   `address` VARCHAR(255) NOT NULL,
+   `phone` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`customer_id`)
+);
+
+CREATE TABLE `mechanic` (
+   `mechanic_id` SERIAL NOT NULL,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `ssn` VARCHAR(11) NOT NULL,
+   `email` VARCHAR(100) NOT NULL,
+   `address ` VARCHAR(255) NOT NULL,
+   `phone ` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`mechanic_id`)
+);
+
+CREATE TABLE `salesperson` (
+   `salesperson_id` SERIAL NOT NULL,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `ssn` VARCHAR(11) NOT NULL,
+   `email` VARCHAR(100) NOT NULL,
+   `address ` VARCHAR(255) NOT NULL,
+   `phone ` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`salesperson_id`)
+);
+
+CREATE TABLE `car` (
+   `car_id` SERIAL NOT NULL,
+   `model` VARCHAR(50) NOT NULL,
+   `color` VARCHAR(50) NOT NULL,
+   `year` INT NOT NULL,
+   `sale_price` DECIMAL(9,2) NOT NULL,
+   `manufacture` VARCHAR(20) NOT NULL,
+   `car_for_sale` BOOL NOT NULL,
+   PRIMARY KEY (`car_id`)
+);
+
+CREATE TABLE `service` (
+   `service_id` SERIAL NOT NULL,
+   `name_of_service` VARCHAR(255),
+   `price` DECIMAL(8,2) NOT NULL,
+   `service_description` VARCHAR(255),
+   PRIMARY KEY (`service_id`)
+);
+
+CREATE TABLE `parts` (
+   `parts_id` SERIAL NOT NULL,
+   `part_number` INT NOT NULL,
+   `part_description` VARCHAR(255),
+   `purchased_price` DECIMAL(8, 2) NOT NULL,
+   `retail_price` DECIMAL(8, 2) NOT NULL,
+   `in_stock` BOOL NOT NULL,
+   `quantity` INT NOT NULL,
+   PRIMARY KEY (`parts_id`)
+);
+
+CREATE TABLE `invoice` (
+   `invoice_id` SERIAL NOT NULL,
+   `invoice_number` INT NOT NULL,
+   `date` DATE NOT NULL,
+   `time` TIME WITHOUT TIME ZONE NOT NULL,
+   `car_id` SERIAL,
+   `salesperson_id` SERIAL,
+   `customer_id` SERIAL,
+   PRIMARY KEY (`invoice_id`)
+);
+
+CREATE TABLE `service_ticket` (
+   `service_ticket_id` SERIAL NOT NULL,
+   `car_id` SERIAL NOT NULL,
+   `customer_id` SERIAL NOT NULL,
+   `date_received` DATE NOT NULL,
+   `date_returned` DATE NOT NULL,
+   `comments` VARCHAR(255),
+   PRIMARY KEY (`service_ticket_id`)
+);
+
+CREATE TABLE mechanics_services (
+   mechanics_services_id SERIAL NOT NULL,
+   service_ticket_id SERIAL NOT NULL,
+   service_id SERIAL NOT NULL,
+   mechanic_id SERIAL NOT NULL,
+   total_hours INT,
+   rate` DECIMAL(5,2),
+   work_cost DECIMAL(6,2),
+   total_work_cost DECIMAL(7,2),
+   comments VARCHAR(255),
+   PRIMARY KEY (mechanics_services_id)
+);
+
+
+ALTER TABLE mechanics_services ADD CONSTRAINT FK_1739a8caeec8 FOREIGN KEY (service_ticket_id) REFERENCES service_ticket(service_ticket_id);
+
+ALTER TABLE mechanics_services ADD CONSTRAINT FK_0453a003a3c0 FOREIGN KEY (service_id) REFERENCES service(service_id);
+
+ALTER TABLE mechanics_services ADD CONSTRAINT FK_3832c97fdba5 FOREIGN KEY (mechanic_id) REFERENCES mechanic(mechanic_id);
+
+
+
+
+CREATE TABLE `used_parts` (
+   `used_part_id` SERIAL NOT NULL,
+   `part_id` SERIAL NOT NULL,
+   `used_quantity` INT,
+   `service_ticket_id` SERIAL NOT NULL,
+   `` ,
+   PRIMARY KEY (`used_part_id`)
+);
+
+CREATE TABLE `customer` (
+   `customer_id` SERIAL NOT NULL,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `email` VARCHAR(100),
+   `address` VARCHAR(255) NOT NULL,
+   `phone` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`customer_id`)
+);
+
+CREATE TABLE `mechanic` (
+   `mechanic_id` SERIAL NOT NULL,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `ssn` VARCHAR(11) NOT NULL,
+   `email` VARCHAR(100) NOT NULL,
+   `address ` VARCHAR(255) NOT NULL,
+   `phone ` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`mechanic_id`)
+);
+
+CREATE TABLE `salesperson` (
+   `salesperson_id` SERIAL NOT NULL,
+   `first_name` VARCHAR(50) NOT NULL,
+   `last_name` VARCHAR(50) NOT NULL,
+   `ssn` VARCHAR(11) NOT NULL,
+   `email` VARCHAR(100) NOT NULL,
+   `address ` VARCHAR(255) NOT NULL,
+   `phone ` VARCHAR(15) NOT NULL,
+   PRIMARY KEY (`salesperson_id`)
+);
+
+CREATE TABLE `car` (
+   `car_id` SERIAL NOT NULL,
+   `model` VARCHAR(50) NOT NULL,
+   `color` VARCHAR(50) NOT NULL,
+   `year` INT NOT NULL,
+   `sale_price` DECIMAL(9,2) NOT NULL,
+   `manufacture` VARCHAR(20) NOT NULL,
+   `car_for_sale` BOOL NOT NULL,
+   PRIMARY KEY (`car_id`)
+);
+
+CREATE TABLE `service` (
+   `service_id` SERIAL NOT NULL,
+   `name_of_service` VARCHAR(255),
+   `price` DECIMAL(8,2) NOT NULL,
+   `service_description` VARCHAR(255),
+   PRIMARY KEY (`service_id`)
+);
+
+CREATE TABLE `parts` (
+   `parts_id` SERIAL NOT NULL,
+   `part_number` INT NOT NULL,
+   `part_description` VARCHAR(255),
+   `purchased_price` DECIMAL(8, 2) NOT NULL,
+   `retail_price` DECIMAL(8, 2) NOT NULL,
+   `in_stock` BOOL NOT NULL,
+   `quantity` INT NOT NULL,
+   PRIMARY KEY (`parts_id`)
+);
+
+CREATE TABLE `invoice` (
+   `invoice_id` SERIAL NOT NULL,
+   `invoice_number` INT NOT NULL,
+   `date` DATE NOT NULL,
+   `time` TIME WITHOUT TIME ZONE NOT NULL,
+   `car_id` SERIAL,
+   `salesperson_id` SERIAL,
+   `customer_id` SERIAL,
+   PRIMARY KEY (`invoice_id`)
+);
+
+CREATE TABLE `service_ticket` (
+   `service_ticket_id` SERIAL NOT NULL,
+   `car_id` SERIAL NOT NULL,
+   `customer_id` SERIAL NOT NULL,
+   `date_received` DATE NOT NULL,
+   `date_returned` DATE NOT NULL,
+   `comments` VARCHAR(255),
+   PRIMARY KEY (`service_ticket_id`)
+);
+
+CREATE TABLE `mechanics_services` (
+   `mechanics_services_id` SERIAL NOT NULL,
+   `service_ticket_id` SERIAL NOT NULL,
+   `service_id` SERIAL NOT NULL,
+   `mechanic_id` SERIAL NOT NULL,
+   `total_hours` INT,
+   `rate` DECIMAL(5,2),
+   `work_cost` DECIMAL(6,2),
+   `total_work_cost` DECIMAL(7,2),
+   `service_comments` VARCHAR(255),
+   PRIMARY KEY (`mechanics_services_id`)
+);
+
+CREATE TABLE `used_parts` (
+   `used_part_id` SERIAL NOT NULL,
+   `part_id` SERIAL NOT NULL,
+   `used_quantity` INT,
+   `service_ticket_id` SERIAL NOT NULL,
+   `` ,
+   PRIMARY KEY (`used_part_id`)
+);
+
+
+ALTER TABLE `used_parts` ADD CONSTRAINT `FK_36697fb6-0dc0-4246-b11a-9cff9f837ace` FOREIGN KEY (`part_id`) REFERENCES `parts`(`parts_id`)  ;
+
+ALTER TABLE `used_parts` ADD CONSTRAINT `FK_2e8413b8-c69b-4adf-ba84-19d7a60c0818` FOREIGN KEY (`service_ticket_id`) REFERENCES `service_ticket`(`service_ticket_id`)  ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

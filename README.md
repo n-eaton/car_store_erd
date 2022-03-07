@@ -1,4 +1,4 @@
-# Database and ERD for Car Store
+# Database and ERD for Car Shop
 Database and ERD for Car Store. pgAdmin
 
 
